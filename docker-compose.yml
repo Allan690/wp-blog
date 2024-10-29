@@ -41,6 +41,7 @@ services:
       - 80:80
     volumes:
       - wordpress:/var/www/html:ro
+      - ./infra/nginx/certs:/etc/letsencrypt  # For SSL certificates
     networks:
       - backend
 
