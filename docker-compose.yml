@@ -42,7 +42,8 @@ services:
       - 443:443
     volumes:
       - wordpress:/var/www/html:ro
-      - /etc/letsencrypt  # For SSL certificates
+      - /etc/letsencrypt/live/blog.hushdev.xyz:/etc/letsencrypt/live/blog.hushdev.xyz  # Mount Let's Encrypt certs
+      - /etc/letsencrypt/archive/blog.hushdev.xyz:/etc/letsencrypt/archive/blog.hushdev.xyz
     networks:
       - backend
 
