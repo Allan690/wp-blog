@@ -24,6 +24,7 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
+      MARIADB_ROOT_PASSWORD: admin
     volumes:
       - mysql:/var/lib/mysql
     networks:
