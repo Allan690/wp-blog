@@ -39,6 +39,7 @@ services:
         TAG: ${TAG}
     ports:
       - 80:80
+      - 443:443
     volumes:
       - wordpress:/var/www/html:ro
       - ./infra/nginx/certs:/etc/letsencrypt  # For SSL certificates
