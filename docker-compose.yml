@@ -1,0 +1,51 @@
+services:
+
+  wordpress:
+    image: ${REPO}/wordpress:${TAG}
+    build:
+      context: ./infra/wordpress/
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_PASSWORD: admin
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wordpress:/var/www/html
+    depends_on:
+      - mysql
+    networks:
+      - backend
+
+  mysql:
+    image: mariadb:11.5.2
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - backend
+
+  nginx:
+    image: ${REPO}/nginx:${TAG}
+    build:
+      context: ./infra/nginx/
+      args:
+        REPO: ${REPO}
+        TAG: ${TAG}
+    ports:
+      - 80:80
+    volumes:
+      - wordpress:/var/www/html:ro
+    networks:
+      - backend
+
+volumes:
+  wordpress:
+  mysql:
+
+networks:
+  backend:
