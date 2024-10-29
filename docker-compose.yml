@@ -42,7 +42,7 @@ services:
       - 443:443
     volumes:
       - wordpress:/var/www/html:ro
-      - ./infra/nginx/certs:/etc/letsencrypt  # For SSL certificates
+      - /etc/letsencrypt  # For SSL certificates
     networks:
       - backend
 
