@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export REPO=docker.io
 export TAG=dev
 
