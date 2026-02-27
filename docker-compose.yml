@@ -37,15 +37,18 @@ services:
       args:
         REPO: ${REPO}
         TAG: ${TAG}
-    ports:
-      - 80:80
-      - 443:443
     volumes:
       - wordpress:/var/www/html:ro
-      - /etc/letsencrypt/live/blog.hushdev.xyz:/etc/letsencrypt/live/blog.hushdev.xyz  # Mount Let's Encrypt certs
-      - /etc/letsencrypt/archive/blog.hushdev.xyz:/etc/letsencrypt/archive/blog.hushdev.xyz
     networks:
       - backend
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.blog.rule=Host(`blog.hushdev.xyz`)"
+      - "traefik.http.routers.blog.entrypoints=websecure"
+      - "traefik.http.routers.blog.tls.certresolver=letsencrypt"
+      - "traefik.http.services.blog.loadbalancer.server.port=80"
+      - "traefik.docker.network=traefik-public"
 
 volumes:
   wordpress:
@@ -53,3 +56,5 @@ volumes:
 
 networks:
   backend:
+  traefik-public:
+    external: true
