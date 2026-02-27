@@ -16,7 +16,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -T 10 "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
+          echo -e "Host ${{ secrets.SERVER_HOST }}\n  StrictHostKeyChecking no\n  UserKnownHostsFile /dev/null" >> ~/.ssh/config
 
       - name: Sync files to server
         run: |
